@@ -24,8 +24,11 @@ from pandas import *
 from scipy.stats import mode
 import boto3
 from botocore.client import Config
-import matplotlib.pyplot as plt
 import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+
+
 
 matplotlib.style.use('ggplot')
 
@@ -220,8 +223,8 @@ class AnalyseLog:
         # Handle missing data
         # Replace all the missing data with 200 OK, which is the most possible case
         missing = df.ix[pd.isnull(df),].shape[0]
-        # if missing != 0:
-            #df1.fillna(value=5)
+        if missing != 0:
+            df1.fillna(na,count.index[0])
 
         # Plot
         plt.figure("Code volume on %s/1, %s" % (m,self.__year))
@@ -239,8 +242,8 @@ class AnalyseLog:
         # Handle missing data
         # Replace with mean
         missing = df.ix[pd.isnull(df),].shape[0]
-        # if missing != 0:
-            #df1.fillna(value=5)
+        if missing != 0:
+            df1.fillna(na, df.mean())
 
         # Metrics
 
@@ -297,8 +300,8 @@ class AnalyseLog:
         # Handle missing data
         # Replace with mode
         missing = df.ix[pd.isnull(df),].shape[0]
-        # if missing != 0:
-            #df.fillna(value=1)
+        if missing != 0:
+            df.fillna(na,caa95f3c0d41)
 
         # Write summary
         summary = Series([use_agt,not_agt,missing,number], index=["using agent","not using agent","missing","total"])
@@ -376,8 +379,8 @@ class AnalyseLog:
         # Handle missing data
         # Here we fill missing parts with respect to the proportion of each kind accordingly
         missing = df.ix[pd.isnull(df),].shape[0]
-        # if missing != 0:
-            #df.replace(na,scipy.mode(df)) 
+         if missing != 0:
+            df.replace(na,count.index[0]) 
 
         # Write summary
         summary = count
@@ -431,23 +434,18 @@ class AnalyseLog:
 
         return final_summary
 
-    def upload_path(self, ACCESS_NAME, ACCESS_KEY, BUCKET_NAME):###################################################################################
+    def upload_path(self, ACCESS_NAME, ACCESS_KEY):###################################################################################
         '''Path of the AWS S3 bucket to upload the file'''
 
         self.__ACCESS_NAME = ACCESS_NAME
         self.__ACCESS_KEY = ACCESS_KEY
-        self.__BUCKET_NAME = BUCKET_NAME
+        self.__BUCKET_NAME = "info7390-case1"
         print("Access %s bucket name %s: " % (self.__ACCESS_NAME, self.__BUCKET_NAME))
 
     def upload(self, filename):###################################################################################
         '''Upload the file to the bucket'''
 
         print("***************Uploading to AWS S3 bucket***************")
-
-        username = input("Please input your AWS username: ")
-        key = input("Please input your AWS key: ")
-        bucketname = input("Please input your AWS bucket name: ")
-        self.upload_path(username,key,bucketname)
 
         data = open(filename, 'rb')
 
@@ -483,13 +481,15 @@ class AnalyseLog:
                 # df = self.summarize
                 sum_list.append(self.__df)
             
+            print("***************Done analysing of %s log file***************" % self.__year)
             plt.show()
+            self.upload_path(sys.argv[2],sys.argv[3])
             self.__final_data = self.concatData(log_list)
             self.__final_summary = self.concatSummary(sum_list)
             self.upload(self.__final_data)
             self.upload(self.__final_summary)
-            self.upload("print.py")
-            print("***************Done analysing of %s log file***************" % self.__year)
+            self.upload(self.__final_log)
+            print("***************Done uploading***************" % self.__year)
 
 
 if __name__ == '__main__':
