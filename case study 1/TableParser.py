@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding:utf-8 -*-
 
-'''
-Given a company with CIK (company ID) XXX (omitting leading zeroes) and
+'''Given a company with CIK (company ID) XXX (omitting leading zeroes) and
 document accession number YYY (acc-no on search results), programmatically
 generate the url to get data (http://www.sec.gov/Archives/edgar/data/51143
 /000005114313000007/0000051143-13-000007-index.html for IBM for example).

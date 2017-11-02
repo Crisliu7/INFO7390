@@ -19,6 +19,9 @@ import numpy as np
 import re
 import pandas as pd
 import csv
+import time
+import boto3
+from botocore.client import Config
 from bs4 import BeautifulSoup
 
 __author__ = 'Jiali Cheng(001822320), Sicheng Zhang and Mengqi Zhao'
@@ -113,6 +116,42 @@ class TableParser:
         #                 continue                        
         #         i+=1
             # new.to_csv("0000051143-13-000007.csv",mode='a')
+
+    def log(self, operation):
+        '''Log all the operations with a time stamp into a log file'''
+
+        self.__log = "%s-log.txt" % self.__rawAcc
+        with open(self.__log, 'a') as f:
+            data = time.ctime() + ": " + operation
+            f.write(data)
+
+    def upload_path(self, ACCESS_NAME, ACCESS_KEY):###################################################################################
+        '''Path of the AWS S3 bucket to upload the file'''
+
+        print("***************Uploading to AWS S3 bucket***************")
+
+        self.__ACCESS_NAME = ACCESS_NAME
+        self.__ACCESS_KEY = ACCESS_KEY
+        self.__BUCKET_NAME = "info7390-case1"
+        print("Accessing bucket name %s: " %  self.__BUCKET_NAME)
+
+    def upload(self, filename):###################################################################################
+        '''Upload the file to the bucket'''
+
+        data = open(filename, 'rb')
+
+        s3 = boto3.resource(
+            's3',
+            aws_access_key_id=self.__ACCESS_NAME,
+            aws_secret_access_key=self.__ACCESS_KEY,
+            config=Config(signature_version='s3v4'))
+
+        s3.Bucket(self.__BUCKET_NAME).put_object(Key=filename, Body=data)
+        
+        # Log and print
+        operation = "Done uploading.\n"
+        self.log(operation)
+        print(operation)
         
         
     def startparsing(self):
@@ -121,6 +160,8 @@ class TableParser:
         url = self.formUrl(self.__rawAcc)
         url_10q = self.get10q(url)
         self.extract(url_10q)
+        self.upload_path(sys.argv[2],sys.argv[3])
+        self.upload("0000051143-13-000007.csv")
         print("***********Done!***********")
 
 

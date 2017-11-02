@@ -1,0 +1,5 @@
+part1:
+0000051143-13-000007
+part2:
+python3 MissingData.py 2005 AKIAIOCL7IL4RCB5MMNQ BSNNRZKYdm6BL8LoTbBh2m7ONecCUzXo99cVjqj1
+docker run chengjiali/part2:latest python3 /src/MissingData.py 2005 AKIAIOCL7IL4RCB5MMNQ BSNNRZKYdm6BL8LoTbBh2m7ONecCUzXo99cVjqj1
