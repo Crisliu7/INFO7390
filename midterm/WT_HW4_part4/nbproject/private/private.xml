@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-private xmlns="http://www.netbeans.org/ns/project-private/1">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+        <group>
+            <file>file:/Users/QiYuBin/NetBeansProjects/WT_HW4_part4/src/java/com/neu/bean/Home.java</file>
+            <file>file:/Users/QiYuBin/NetBeansProjects/WT_HW4_part4/src/java/com/neu/controller/AccessController.java</file>
+            <file>file:/Users/QiYuBin/NetBeansProjects/WT_HW4_part4/src/java/com/neu/filter/XssHttpServlet.java</file>
+            <file>file:/Users/QiYuBin/NetBeansProjects/WT_HW4_part4/web/WEB-INF/web.xml</file>
+            <file>file:/Users/QiYuBin/NetBeansProjects/WT_HW4_part4/web/WEB-INF/jsp/error.jsp</file>
+            <file>file:/Users/QiYuBin/NetBeansProjects/WT_HW4_part4/src/java/com/neu/bean/Order.java</file>
+            <file>file:/Users/QiYuBin/NetBeansProjects/WT_HW4_part4/web/WEB-INF/applicationContext.xml</file>
+            <file>file:/Users/QiYuBin/NetBeansProjects/WT_HW4_part4/web/WEB-INF/jsp/index.jsp</file>
+            <file>file:/Users/QiYuBin/NetBeansProjects/WT_HW4_part4/web/WEB-INF/dispatcher-servlet.xml</file>
+            <file>file:/Users/QiYuBin/NetBeansProjects/WT_HW4_part4/web/redirect.jsp</file>
+        </group>
+    </open-files>
+</project-private>
