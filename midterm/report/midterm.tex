@@ -14,59 +14,53 @@
 % correct bad hyphenation here
 \hyphenation{op-tical net-works semi-conduc-tor}
 \begin{document}
-\title{Parsing Tables from EDGAR with Python \\and Its Dockerization}
+\title{Modeling Log-error with Zillow Housing Data}
 %
 % author names and affiliations
-\author{\IEEEauthorblockN{Jiali Cheng$^{1}$}
+\author{\IEEEauthorblockN{Jiali Cheng$^{1}$, Sicheng Zhang$^{1}$}
 \IEEEauthorblockA{$^{1}$Graduate School of Engineering, Northeastern University, Boston, USA}
 }
 % make the title area
 \maketitle
 \begin{abstract}
-We use Python to access data from EDGAR, the Electronic Data Gathering, Analysis, and Retrieval system. Given a company ID, called CIK, and an Access Number, called acc-no, an URL to this HTML file is generated. We locate to the 10Q file and extract all the tables and save them as CSV(Comma Separated Values) files. Then we dockerize this pipeline so that it can be used for any websites, not only restricted to IBM.
+In this paper, we are aiming at fitting the log-error of Zillow housing price in 2016 and 2017 using Multi-Linear Regression, Random Forest and Neural Network based on Mean Squared Error and Mean Average Percent Error.  First we do an in-depth Exploratory Data Analysis, which gave us a brief view of what the data looks like. Then we clean the data and select 9 features out of a total of 53. Then we throw the training set into Multi-Linear Regression, Random Forest and Neural Network. It turns out that Random Forest gets the highest accuracy with reasonable computation time. Then we build this model on AWS Machine Learning and access it with REST API.
 \end{abstract}
 \begin{keywords}
-Parse Tabels, HTML, EDGAR, Python, Docker
+Log-error, Multi-Linear Regression, Random Forest, Neural Network, MSE, MAPE
 \end{keywords}
 \IEEEpeerreviewmaketitle
 %
 %Introduction
 \section{Introduction}\label{i}
-\indent The Electronic Data Gathering Analysis and Retrieval (EDGAR) system is run by Office of Information Technology, U.S. Securities and Exchange Commission. performs automated collection, validation, indexing, acceptance, and forwarding of submissions by companies and others who are required by law to file forms with the SEC. The database is freely available to the public via the Internet (Web or FTP).
-\\
-\indent In this paper we focus on parsing the tables in the 10Q file of each company. And we introduces a way that given a CIK (company ID), automatically generates the URL (Uniformly Resource Location) to the 10Q file and parse all the tables to save to a CSV file. We then build this pipeline into a Docker image so that it can run on other PCs or laptops. 
-\\
-\indent Parsing tables have always been a hot topic and a useful tool for data collection. We use 
-\\
-\indent The remainder of the paper is organized as follows. In Sect.~\ref{ii} we briefly go through the objectives and expectations of the TableParser package and provide an overview of it. Then we detail the design of this package in Sect.~\ref{iii}. Sect.~\ref{iv} presents the results and analysis of the algorithm and code. And in Sect.~\ref{vii} we conclude the report.
-\\
-%TableParser
+\indent Zillow is an online real estate renting and selling platform, who keeps records of thousands of houses and estimate their selling price. In this paper, we use the Zillow housing data from 2016 and 2017 to estimate the log-error, which is defined by Zillow as log(Zestimate) - log(sale price). \\
+%
 \section{Exploratory Data Analysis}\label{ii}
-\indent According to the issues addressed in Sect.~\ref{ii}, we develop a package called TableParser. It basically follows the processing order shown in Fig. ~\ref{flowchart}. Given an Accession Number, we can easily generate the URL of its files on the EDGAR system. And we use regular expression to locate to the 10Q file of this company, which is the target of our parsing job. Then we call the read\_html function to parse the tables out. We clean the noisy data and write it to a CSV file.
+\indent 
 \\
 %
-\begin{figure}
-\centering
-\includegraphics[width=3.8in]{flow1.png}
-\caption{The processing flowchart}\label{flowchart}
-\end{figure}
+
 %
 %Algorithm
-\section{Data Preprocessing/Wrangling}\label{iii}
-depends.
-i) missing value???????????????????????
-ii) missing value????????????????????????????????????????????????????????????????????????
-iii) missing value as another occasion, and assign them a value.
-\section{Feature Engineering}\label
-Feature selection is a process where you automatically select those features in your data that contribute most to the prediction variable or output in which you are interested.
-Having too many irrelevant features in your data can decrease the accuracy of the models. Three benefits of performing feature selection before modeling your data are:
-Reduces Overfitting: Less redundant data means less opportunity to make decisions based on noise.
-Improves Accuracy: Less misleading data means modeling accuracy improves.
-Reduces Training Time: Less data means that algorithms train faster.
-Many kernels posted for this competition doesn't use one hot encoding for many variables which I believe should be treated as such. For example, regionzipid (i.e. zip code) is not exactly a numerical variable and there isn't ordinal relationship between two zip codes. Same goes for other variables such as airconditioningtypeid, architecturalstyletypeid etc.
+\section{Data Cleaning and Preprocessing}\label{iii}
+\indent There are different types of missing values and we need to adopt different methods accordingly so that we clean the data most logistically. \\ Basically by a value is "missing", we mean one of the following: \\
+i) a value that is simply missing. \\
+ii) a value that implies something wrong or impossible, such as month of 13, which makes no sense. \\
+iii) a value missing as another occasion. \\
+\indent In this project, we fill the missing data based on the statistical feature of them, correct outliers and do some useful transformation. And we follow the principle of correcting data with less time and effort. \\
+\indent First we calculate the missing-to-all ratio of every feature. We found that some features have more than 70 percent of data missing. It is such a high missing ratio that we delete these features. A house may have a lot of features and some of them are too specific and may be of less use. Moreover, we have little clue from which we can fill these features. And filling them would cost too much time. Hence, simply deleting the features with more than 70 percent missing ratio is a good choice. \\
+\indent 
 
-When I try one hot encoding on those variables and use XGB, my scores are worse than not using one hot encoding. 
-\\
+\section{Feature Engineering}\label{iv}
+\indent Feature selection is a process where you automatically select those features in your data that contribute most to the prediction variable or output in which you are interested. According to many data scientist, "Data and its features would decide the upper bound of machine learning. While algorithm and model can only get closer to that upper bound." This may reflect the importance of feature engineering.\\
+\indent Having too many irrelevant features in your data can decrease the accuracy of the models. Three benefits of performing feature selection before modeling your data are: \\
+\indent i) Reducing Overfittingness: Less redundant data means less opportunity to make decisions based on noise. \\ 
+\indent ii) Improving Accuracy: Less misleading data means modeling accuracy improves. \\
+\indent iii) Reducing Training Time: Less data means that algorithms train faster. \\
+\indent In this project, we basically select useful features out of the 58 features given. In order to do feature engineering, we take a careful look at our data set. There are numerical data, such as square feet,  and categorical data, such as many type ID. There also exist some features that can be regarded as both numerical and categorical, such as bedroom number. We follow the rule of selecting fewer features in less time. Therefore, we treat features that is both numerical and categorical as numerical, which save our time. \\
+\indent We conduct feature selection in 3 parts: Selecting based on the information of an individual feature, selecting based on the feature importance on the target and selecting based on the correlation between two features.  And for categorical features, we do a numerical encoding so that they can be regarded as numerical features. \\
+\indent \\
+\indent Many kernels posted for this competition doesn't use one hot encoding for many variables which I believe should be treated as such. For example, regionzipid (i.e. zip code) is not exactly a numerical variable and there isn't ordinal relationship between two zip codes. Same goes for other variables such as airconditioningtypeid, architecturalstyletypeid etc. When I try one hot encoding on those variables and use XGB, my scores are worse than not using one hot encoding. \\
+\indent best categorical var. encoding depends both on the model you are using and the variable itself (not the same 3 levels than 10000 levels, what is called "high cardinality"). ordinal (numeric) encoding doesn't normally work in linear models because the model has no mechanism to handle badly ordered features or nonlinear relationships between certain categories and the target.\\
 %
 \section{Model Selection and Training}\label{v}
 \indent Linear Regression
@@ -78,15 +72,11 @@ The sklearn.ensemble module includes two averaging algorithms based on randomize
 Random Forest has less bias, need to reduce variance. sub models are not weak models.
 scale cannot be big since it takes a lot of memory. rf is a black box we don't know what's inside.
 
-\indent Neural Network
+\indent Neural Network \\
+
 %
 \section{Model Ensemble}\label{vi}
 %
 \section{Conclusion}\label{vii}
 %
-\begin{thebibliography}{1}
-\bibitem{NASA's Space}
-Liebrecht, P., Schier, J., Bhasin, K., Bibyk, I., Butler, M., Hudiburg, J., Tai, W., Shames, P., NASA's Space Communications Integrated Architecture, Proceedings of SpaceOps 2010 Conference, AIAA, 25-30 April 2010, Huntsville,
-Alabama.
-\end{thebibliography}
 \end{document} 

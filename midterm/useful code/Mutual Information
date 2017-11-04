@@ -1,0 +1,26 @@
+# 2. Mutual Information
+# from minepy import MINE
+# m = MINE()
+# mi = []
+# co = ['fips']#,'calculatedfinishedsquarefeet','longitude','landtaxvaluedollarcnt',\
+#                 #'structuretaxvaluedollarcnt','finishedsquarefeet12','taxvaluedollarcnt',\
+#                 #'latitude','lotsizesquarefeet','bedroomcnt','censustractandblock']
+# for c in co:
+#     f = ts[c]
+#     m.compute_score(f, f_label)
+#     mi.append(m.mic())
+# print(mi)
+# from sklearn.model_selection import GridSearchCV
+# import copy
+# param_test2b = {
+#  'min_child_weight':[6,8,10,12],
+#  'learning_rate':[1, .1, .001],
+#   'n_estimators': [100, 200, 300],
+#    'max_depth': [3, 5, 6]
+# }
+
+# gsearch2b = GridSearchCV(estimator = xgb.XGBRegressor( learning_rate=0.1, n_estimators=140, max_depth=4,
+# min_child_weight=2, gamma=0, subsample=0.8, colsample_bytree=0.8,
+# objective= 'reg:linear', nthread=4, scale_pos_weight=1,seed=27), 
+# param_grid = param_test2b, scoring='neg_mean_squared_error',n_jobs=4,iid=False, cv=5)
+# gsearch2b.fit(f_train,f_label.values)
