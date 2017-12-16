@@ -1,0 +1,204 @@
+<html>
+    <style>
+         table, th , td {
+            border: 1px solid grey;
+            border-collapse: collapse;
+            padding: 5px;
+         }
+         
+         table tr:nth-child(odd) {
+            background-color: #f2f2f2;
+         }
+         
+         table tr:nth-child(even) {
+            background-color: #ffffff;
+         }
+		 
+.ClassA{
+  background-color:yellow;
+  color:red;
+}
+.ClassB{
+  background-color:red;
+  color:yellow;
+}
+
+.ClassC{
+    background-color:green;
+    color:blue;
+}
+
+.pending-delete {
+  background-color: pink
+}
+      </style>
+<head>
+  <title>Please Input Item Data</title>
+</head>
+<body>
+  {% if message %}
+  <p style="color:red">{{ message }}</p>
+  {% endif %}
+  <form action="/calculate" method="post">
+    <div>
+      <p>Item Name:  <input name="item_name"></p>
+      <p>Brand Name: <input name="brand_name"></p>
+    </div>
+      <br>
+   
+    <div>
+      <select name="category_name_1">
+        <option value="none">Category Name</option>
+        <option value ="Men">Men</option>
+        <option value ="Women">Women</option>
+      </select>
+    
+                     
+
+      <select name="category_name_2">
+        <option value="none">Category Name</option>
+        <option value ="Men">Men</option>
+        <option value ="Women">Women</option>
+      </select>
+
+      <select name="category_name_3">
+        <option value="none">Category Name</option>
+        <option value ="Men">Men</option>
+        <option value ="Women">Women</option>
+      </select> 
+        <br>
+        <br>
+        <br>
+    </div>
+
+    <div>
+      <select name="item_condition">
+        <option value="none">Item Condition</option>
+        <option value ="0">0</option>
+        <option value ="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+      </select>
+        <br>
+        <br>
+    </div>
+      
+    <div>
+      <select name="ship">
+        <option value="none">Shipping</option>
+        <option value ="0">Yes</option>
+        <option value ="1">No</option>
+        
+        </select> 
+        <br>
+        <br>
+    </div>
+    
+    <div>          
+      <p>Item Description: <input name="item_des" type="textarea"></p>
+    </div>
+    
+
+    <p><button type="submit">Submit</button></p>
+
+  </form>
+  
+  <form action="/example1" method="post">
+    <div>
+      <table>
+        <tr>
+          <th>name</th>
+          <th>item_condition_id</th>
+          <th>category_name</th>
+          <th>brand_name</th>
+          <th>shipping</th>
+          <th>item_description </th>
+        </tr>
+        <tr>
+          <td>AVA-VIV Blouse</td>
+          <td>1</td>
+          <td>Women/Tops & Blouses/Blouse</td>
+          <td>Target</td>
+          <td>1</td>
+          <td>Adorable top with a hint of lace and a key hole in the back! The pale pink is a 1X. </td>
+        </tr>
+      </table>
+      <p><button type="submit">Example1</button></p>
+    <div>
+  </form>
+
+  <form action="/example2" method="post">
+    <div>
+      <table>
+        <tr>
+          <th>name</th>
+          <th>item_condition_id</th>
+          <th>category_name</th>
+          <th>brand_name</th>
+          <th>shipping</th>
+          <th>item_description </th>
+        </tr>
+        <tr>
+          <td>Black Skater dress</td>
+          <td>2</td>
+          <td>Women/Dresses/Above Knee</td>
+          <td>Mini rue</td>
+          <td>0</td>
+          <td>Xl, great condition.</td>
+        </tr>
+      </table>
+      <p><button type="submit">Example2</button></p>
+    <div>
+  </form>
+
+  <form action="/example3" method="post">
+    <div>
+      <table>
+        <tr>
+          <th>name</th>
+          <th>item_condition_id</th>
+          <th>category_name</th>
+          <th>brand_name</th>
+          <th>shipping</th>
+          <th>item_description </th>
+        </tr>
+        <tr>
+          <td>HOLD for Dogs2016 Minnetonka boots</td>
+          <td>3</td>
+          <td>Women/Shoes/Boots</td>
+          <td>UGG Australia</td>
+          <td>0</td>
+          <td>Authentic. Suede fringe boots. Great condition! Size 7. If you are between the sizes 5.5-7 and love wearing thick socks during the winter they'd be perfect for you as well (I did last winter)</td>
+        </tr>
+      </table>
+      <p><button type="submit">Example3</button></p>
+    <div>
+  </form>
+ 
+  <form action="/example4" method="post">
+    <div>
+      <table>
+        <tr>
+          <th>name</th>
+          <th>item_condition_id</th>
+          <th>category_name</th>
+          <th>brand_name</th>
+          <th>shipping</th>
+          <th>item_description </th>
+        </tr>
+        <tr>
+          <td>Air Jordan carmine 6s</td>
+          <td>3</td>
+          <td>Men/Shoes/Athletic</td>
+          <td>Air Jordan</td>
+          <td>0</td>
+          <td>They are 100 percent authentic. They are beaters but they still have a lot of life in them. No original box.</td>
+        </tr>
+      </table>
+      <p><button type="submit">Example4</button></p>
+    <div>
+  </form>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        .base_login{
+            float: none;
+            display: block;
+            margin-left: auto;
+            margin-right:auto;
+            width: 200px;
+        }
+    </style>
+    <title>BaseLogin</title>
+</head>
+<body>
+<div class="base_login">
+    <h1>用户登录</h1>
+    <div>
+        <form method="POST">
+            <!--启动CSRF-->
+            {{form.hidden_tag()}}
+            <p>
+                用户：{{form.name(size=20,id='name')}}
+                {%for e in form.name.errors%}
+                <span style="color: red">*{{e}}</span>
+                {%endfor%}
+            </p>
+            <p>
+                密码：{{form.password(size=20,id='password')}}
+
+                <span style="color: red">*{{e}}</span>
+                {%endfor%}
+            </p>
+            <p><button style="float: right" type="submit">登录</button></p>
+        </form>
+    </div>
+</div>
+</body>
+</html>
