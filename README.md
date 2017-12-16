@@ -8,19 +8,8 @@ when I am probably turning on my computer and starting the web app.
 For each person's role:
 
 Jiali Cheng(001822320):
-Cleaning
-Group Average
-Extract Features
-Bag of Words
-Word to Vector
-Deployment
-Report
+Cleaning, Group Average, Extract Features, Bag of Words, Word to Vector, Deployment, Report
 
 Sicheng Zhang(001239226):
-Data Ingestion
-EDA
-Regression and random forest
-TF-IDF
-Deployment
-Report
+Data Ingestion, EDA, Regression and random forest, TF-IDF, Deployment, Report
 
